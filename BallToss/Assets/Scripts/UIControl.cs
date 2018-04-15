@@ -8,11 +8,12 @@ public class UIControl : MonoBehaviour {
     private Wind wind;
     [SerializeField]
     private Slider windSlider;
-
+    [SerializeField]
+    private Text scoreText;
 	// Use this for initialization
 	void Start () {
-        wind = FindObjectOfType<Wind>();
-        wind.windSpeed = 0f;
+        //wind = FindObjectOfType<Wind>();
+       // wind.windSpeed = 0f;
 	}
 
 
@@ -25,5 +26,11 @@ public class UIControl : MonoBehaviour {
     {
         windSlider.value = Mathf.Abs( wind.windSpeed);
     }
+
+    public void UpdateScore(int score)
+    {
+        scoreText.text = "Score\n" + score; 
+    }
+
 
 }

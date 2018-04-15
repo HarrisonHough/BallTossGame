@@ -5,9 +5,11 @@ using UnityEngine;
 public class Ball : MonoBehaviour {
 
     [SerializeField]
-    private float yForce = 100f;
+    private float xForceScale = 1f;
     [SerializeField]
-    private float zForce = 100f;
+    private float yForceScale = 1f;
+    [SerializeField]
+    private float zForceScale = 1f;
 
     public float power = 50f;
     Rigidbody rb;
@@ -20,18 +22,41 @@ public class Ball : MonoBehaviour {
     public void Shoot()
     {
         rb.useGravity = true;
-        Vector3 direction = new Vector3(0,1*yForce,1 * zForce);
+        Vector3 direction = new Vector3(0,1*yForceScale,1 * zForceScale);
+        
         rb.AddForce(direction);
 
+    }
+
+    public void Shoot2(Vector3 force)
+    {
+     
+        //z ignored
+        rb.useGravity = true;
+        //Vector3 direction = new Vector3(force.x * power, force.y * power, -force.y * power);
+
+        //rb.AddForce(Camera.main.transform.TransformDirection(direction));
+        //rb.AddForce(transform.TransformDirection(direction));
+        //rb.AddForce(force.x * power, force.y * power, -force.y * power, ForceMode.Impulse);
+        
+        rb.AddForce(transform.forward * force.y * power);
+        rb.AddForce(transform.up * force.y * power);
+        rb.AddForce(transform.right * force.x * power);
+        Wind.windActive = true;
+
+        //TODO remove later
+        GetComponent<BallRecycle>().StartRecycle();
     }
 
     public void Shoot(Vector3 force)
     {
         //z ignored
         rb.useGravity = true;
-        Vector3 direction = new Vector3(force.x * power, force.y * power, force.y * power);
+        Vector3 direction = new Vector3(force.x * xForceScale * power , force.y * yForceScale * power, force.y * zForceScale * power);
+        
         rb.AddForce(direction);
         Wind.windActive = true;
+
         //TODO remove later
         GetComponent<BallRecycle>().StartRecycle();
     }
@@ -46,6 +71,15 @@ public class Ball : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         Wind.windActive = false;
+       
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Goal")
+        {
+            GameManager.Instance.UpdateScore();
+        }
     }
 
 }

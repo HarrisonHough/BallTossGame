@@ -7,12 +7,14 @@ public class BallRecycle : MonoBehaviour {
     Vector3 startPosition;
     Quaternion startRotation;
     public float recycleTime = 3f;
+    Rigidbody rigidbody;
     Ball ball;
 	// Use this for initialization
 	void Start () {
         ball = GetComponent<Ball>();
         startPosition = transform.position;
         startRotation = transform.rotation;
+        rigidbody = GetComponent<Rigidbody>();
 	}
 
     public void StartRecycle()
@@ -31,6 +33,7 @@ public class BallRecycle : MonoBehaviour {
     void Recycle()
     {
         ball.DisableGravity();
+        rigidbody.angularVelocity = Vector3.zero;
         transform.position = startPosition;
         transform.rotation = startRotation;
     }

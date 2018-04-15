@@ -13,6 +13,8 @@ public class MouseFlickInput : MonoBehaviour {
     Vector3 endPoint;
     private bool grabbed = false;
 
+    private float touchTimer = 0f;
+
     // Use this for initialization
     void Start()
     {
@@ -21,6 +23,7 @@ public class MouseFlickInput : MonoBehaviour {
         {
             ball = FindObjectOfType<Ball>();
         }
+        
 
     }
 
@@ -38,6 +41,7 @@ public class MouseFlickInput : MonoBehaviour {
                 {
                     grabbed = true;
                     Grab();
+                    touchTimer = 0f;
                 }
             }
 
@@ -47,6 +51,11 @@ public class MouseFlickInput : MonoBehaviour {
 
             Release();
             grabbed = false;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            touchTimer += Time.deltaTime;
         }
     }
 
@@ -60,6 +69,15 @@ public class MouseFlickInput : MonoBehaviour {
     {
         endPoint = Input.mousePosition;
         Vector3 deltaPos = startPoint - endPoint;
+        deltaPos.x = deltaPos.x.Remap(0, Screen.width, 0,1);
+        deltaPos.y = deltaPos.y.Remap(0, Screen.height, 0, 1);
+
+        Debug.Log("touch timer = " + (1 - touchTimer));
+        //deltaPos.x +=  touchTimer;
+        deltaPos.y +=  touchTimer;
+
+        //Debug.Log("DeltaX = " + deltaPos.x);
+        //Debug.Log("DeltaY = " + deltaPos.y);
         deltaPos = -deltaPos;
         ball.Shoot(deltaPos);
     }
