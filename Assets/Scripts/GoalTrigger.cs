@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+* AUTHOR: Harrison Hough   
+* COPYRIGHT: Harrison Hough 2018
+* VERSION: 1.0
+* SCRIPT: Goal Trigger Class 
+*/
+
 public class GoalTrigger : MonoBehaviour {
 
     private GoalControl goalControl;

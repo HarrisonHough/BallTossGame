@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+* AUTHOR: Harrison Hough   
+* COPYRIGHT: Harrison Hough 2018
+* VERSION: 1.0
+* SCRIPT: Ball Recycle Class 
+*/
+
 public class BallRecycle : MonoBehaviour {
 
     Vector3 startPosition;

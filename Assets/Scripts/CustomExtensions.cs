@@ -1,6 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+* AUTHOR: Harrison Hough   
+* COPYRIGHT: Harrison Hough 2018
+* VERSION: 1.0
+* SCRIPT: Custom Extensions Class 
+*/
+
 public static class CustomExtensions {
 
 
