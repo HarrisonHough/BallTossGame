@@ -4,11 +4,12 @@ using UnityEngine;
 
 /*
 * AUTHOR: Harrison Hough   
-* COPYRIGHT: Harrison Hough 2018
+* COPYRIGHT: Harrison Hough 2021
 * VERSION: 1.0
 * SCRIPT: Ball Class 
 */
 
+[RequireComponent(typeof(Rigidbody))]
 public class Ball : MonoBehaviour {
 
     [SerializeField]
@@ -19,71 +20,60 @@ public class Ball : MonoBehaviour {
     private float zForceScale = 1f;
 
     public float power = 50f;
-    Rigidbody rb;
-	// Use this for initialization
+    private Rigidbody rigidbodyComponent;
+    private ConstantForce constantForce;
+    private const string GoalTag = "Goal";
+    
 	void Start () {
 
-        rb = GetComponent<Rigidbody>();
-	}
+        rigidbodyComponent = GetComponent<Rigidbody>();
+        constantForce = GetComponent<ConstantForce>();
+    }
 
     public void Shoot()
     {
-        rb.useGravity = true;
+        rigidbodyComponent.useGravity = true;
         Vector3 direction = new Vector3(0,1*yForceScale,1 * zForceScale);
-        
-        rb.AddForce(direction);
+        rigidbodyComponent.AddForce(direction);
 
-    }
-
-    public void Shoot2(Vector3 force)
-    {
-     
-        //z ignored
-        rb.useGravity = true;
-        //Vector3 direction = new Vector3(force.x * power, force.y * power, -force.y * power);
-
-        //rb.AddForce(Camera.main.transform.TransformDirection(direction));
-        //rb.AddForce(transform.TransformDirection(direction));
-        //rb.AddForce(force.x * power, force.y * power, -force.y * power, ForceMode.Impulse);
-        
-        rb.AddForce(transform.forward * force.y * power);
-        rb.AddForce(transform.up * force.y * power);
-        rb.AddForce(transform.right * force.x * power);
-        Wind.windActive = true;
-
-        //TODO remove later
-        GetComponent<BallRecycle>().StartRecycle();
     }
 
     public void Shoot(Vector3 force)
     {
-        //z ignored
-        rb.useGravity = true;
-        Vector3 direction = new Vector3(force.x * xForceScale * power , force.y * yForceScale * power, force.y * zForceScale * power);
-        
-        rb.AddForce(direction);
-        Wind.windActive = true;
-
-        //TODO remove later
+        rigidbodyComponent.useGravity = true;
+        Vector3 result = CalculateForce(force);
+        rigidbodyComponent.AddForce(result);
+        //Wind.windActive = true;
+        constantForce.enabled = true;
+        //TODO refactor
         GetComponent<BallRecycle>().StartRecycle();
+    }
+
+    private Vector3 CalculateForce(Vector3 force)
+    {
+        return new Vector3(
+            force.x * xForceScale * power,
+            force.y * yForceScale * power,
+            force.y * zForceScale * power);
     }
 
     public void DisableGravity()
     {
-        Wind.windActive = false;
-        rb.useGravity = false;
-        rb.velocity = Vector3.zero;
+        //Wind.windActive = false;
+        rigidbodyComponent.useGravity = false;
+        rigidbodyComponent.velocity = Vector3.zero;
+        constantForce.enabled = false;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         Wind.windActive = false;
-       
+        constantForce.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Goal")
+        if (other.tag.Contains(GoalTag))
         {
             GameManager.Instance.UpdateScore();
         }

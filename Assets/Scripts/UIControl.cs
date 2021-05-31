@@ -5,38 +5,42 @@ using UnityEngine.UI;
 
 /*
 * AUTHOR: Harrison Hough   
-* COPYRIGHT: Harrison Hough 2018
+* COPYRIGHT: Harrison Hough 2021
 * VERSION: 1.0
 * SCRIPT: UI Control Class 
 */
 
 public class UIControl : MonoBehaviour {
 
+    [SerializeField]
     private Wind wind;
     [SerializeField]
     private Slider windSlider;
     [SerializeField]
     private Text scoreText;
-	// Use this for initialization
-	void Start () {
-        //wind = FindObjectOfType<Wind>();
-       // wind.windSpeed = 0f;
-	}
+
+    private const string ScorePrefix = "Score\n";
+    void Start () {
+        if (wind != null)
+        {
+            wind.WindSpeed = 0f;
+        }
+    }
 
 
     public void SetWind(float value)
     {
-        wind.windSpeed = value;
+        wind.WindSpeed = value;
     }
 
     public void UpdateWindSlider()
     {
-        windSlider.value = Mathf.Abs( wind.windSpeed);
+        windSlider.value = Mathf.Abs( wind.WindSpeed);
     }
 
     public void UpdateScore(int score)
     {
-        scoreText.text = "Score\n" + score; 
+        scoreText.text = ScorePrefix + score; 
     }
 
 

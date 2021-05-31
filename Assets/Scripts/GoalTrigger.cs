@@ -4,7 +4,7 @@ using UnityEngine;
 
 /*
 * AUTHOR: Harrison Hough   
-* COPYRIGHT: Harrison Hough 2018
+* COPYRIGHT: Harrison Hough 2021
 * VERSION: 1.0
 * SCRIPT: Goal Trigger Class 
 */
@@ -12,10 +12,10 @@ using UnityEngine;
 public class GoalTrigger : MonoBehaviour {
 
     private GoalControl goalControl;
-
-	// Use this for initialization
+    
 	void Start () {
-        goalControl = GameObject.FindObjectOfType<GoalControl>();
+        //TODO refactor
+        goalControl = FindObjectOfType<GoalControl>();
 	}
 
     private void OnTriggerEnter(Collider other)

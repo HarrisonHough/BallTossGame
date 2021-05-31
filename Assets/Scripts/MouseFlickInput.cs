@@ -4,7 +4,7 @@ using UnityEngine;
 
 /*
 * AUTHOR: Harrison Hough   
-* COPYRIGHT: Harrison Hough 2018
+* COPYRIGHT: Harrison Hough 2021
 * VERSION: 1.0
 * SCRIPT: Mouse Flick Input Class 
 */
@@ -22,29 +22,26 @@ public class MouseFlickInput : MonoBehaviour {
 
     private float touchTimer = 0f;
 
-    // Use this for initialization
+    private const string PlayerTag = "Player";
+    
     void Start()
     {
-
+        //TODO refactor
         if (ball == null)
         {
             ball = FindObjectOfType<Ball>();
         }
-        
-
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.tag == "Player")
+                if (hit.transform.tag.Contains(PlayerTag))
                 {
                     grabbed = true;
                     Grab();
@@ -78,13 +75,8 @@ public class MouseFlickInput : MonoBehaviour {
         Vector3 deltaPos = startPoint - endPoint;
         deltaPos.x = deltaPos.x.Remap(0, Screen.width, 0,1);
         deltaPos.y = deltaPos.y.Remap(0, Screen.height, 0, 1);
-
-        Debug.Log("touch timer = " + (1 - touchTimer));
-        //deltaPos.x +=  touchTimer;
         deltaPos.y +=  touchTimer;
-
-        //Debug.Log("DeltaX = " + deltaPos.x);
-        //Debug.Log("DeltaY = " + deltaPos.y);
+        
         deltaPos = -deltaPos;
         ball.Shoot(deltaPos);
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 /*
 * AUTHOR: Harrison Hough   
-* COPYRIGHT: Harrison Hough 2018
+* COPYRIGHT: Harrison Hough 2021
 * VERSION: 1.0
 * SCRIPT: Goal Control Class 
 */
@@ -15,8 +15,7 @@ public class GoalControl : MonoBehaviour {
     private GameObject[] positions;
 
     private int positionIndex;
-
-	// Use this for initialization
+    
 	void Start () {
 
         CheckPositions();
@@ -40,7 +39,6 @@ public class GoalControl : MonoBehaviour {
     {
         // TODO: Add to score
         Debug.Log("Goal Scored");
-        // Move to next position
         NextPosition();
     }
 
@@ -53,13 +51,13 @@ public class GoalControl : MonoBehaviour {
         }
         else
         {
-            //reached last position
             LastGoalScored();
         }
     }
 
     void LastGoalScored()
     {
+        //TODO refactor
         Debug.Log("Last goal scored");
     }
 }

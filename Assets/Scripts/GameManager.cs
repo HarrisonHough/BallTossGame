@@ -4,7 +4,7 @@ using UnityEngine;
 
 /*
 * AUTHOR: Harrison Hough   
-* COPYRIGHT: Harrison Hough 2018
+* COPYRIGHT: Harrison Hough 2021
 * VERSION: 1.0
 * SCRIPT: Game Manager Class 
 */
@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour {
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
     private UIControl uiControl;
-    int score = 0;
-	// Use this for initialization
+    private int score = 0;
+    
 	void Awake () {
 
         if (instance == null)
@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
+        //TODO refactor
         uiControl = FindObjectOfType<UIControl>();
     }
 

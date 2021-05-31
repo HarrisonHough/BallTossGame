@@ -4,7 +4,7 @@ using UnityEngine;
 
 /*
 * AUTHOR: Harrison Hough   
-* COPYRIGHT: Harrison Hough 2018
+* COPYRIGHT: Harrison Hough 2021
 * VERSION: 1.0
 * SCRIPT: Wind Class 
 */
@@ -17,19 +17,21 @@ public class Wind : MonoBehaviour {
     private float maxSpeed = 100f;
     [SerializeField]
     private Rigidbody ball;
-    public float windSpeed = 1f;
+
+    private float windSpeed;
+    public float WindSpeed
+    {
+        get => windSpeed;
+        set => windSpeed = value;
+    }
     public static bool windActive = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-        if(windActive)
-            ball.AddForce(Vector3.left * windSpeed * Time.deltaTime);
-	}
+    void FixedUpdate () {
+        if (windActive)
+        {
+            ball.AddForce(Vector3.left * (windSpeed * Time.deltaTime));
+        }
+    }
 
     public void RandomWindStrength()
     {
@@ -37,7 +39,6 @@ public class Wind : MonoBehaviour {
 
         if (Random.Range(0, 2) < 1)
         {
-            //make negative (wind in opposite direction
             windSpeed *= -1;
         }
     }

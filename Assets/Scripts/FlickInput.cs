@@ -4,7 +4,7 @@ using UnityEngine;
 
 /*
 * AUTHOR: Harrison Hough   
-* COPYRIGHT: Harrison Hough 2018
+* COPYRIGHT: Harrison Hough 2021
 * VERSION: 1.0
 * SCRIPT: Flick Input Class 
 */
@@ -13,8 +13,7 @@ public class FlickInput : MonoBehaviour
 {
     [SerializeField]
     private Ball ball;
-
-    // Use this for initialization
+    
     void Start () {
 
         if (ball == null)
@@ -23,8 +22,7 @@ public class FlickInput : MonoBehaviour
         }
 
 	}
-	
-	// Update is called once per frame
+    
 	void Update () {
 
         if (Input.GetMouseButtonDown(0)) {
