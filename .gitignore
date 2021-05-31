@@ -82,3 +82,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#Rider generated files
+/.idea
