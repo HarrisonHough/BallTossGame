@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 /*
@@ -12,8 +13,8 @@ using UnityEngine.UI;
 
 public class UIControl : MonoBehaviour {
 
-    [SerializeField]
-    private Wind wind;
+    [FormerlySerializedAs("wind")] [SerializeField]
+    private WindZone windZone;
     [SerializeField]
     private Slider windSlider;
     [SerializeField]
@@ -21,21 +22,21 @@ public class UIControl : MonoBehaviour {
 
     private const string ScorePrefix = "Score\n";
     void Start () {
-        if (wind != null)
+        if (windZone != null)
         {
-            wind.WindSpeed = 0f;
+            windZone.WindSpeed = 0f;
         }
     }
 
 
     public void SetWind(float value)
     {
-        wind.WindSpeed = value;
+        windZone.WindSpeed = value;
     }
 
     public void UpdateWindSlider()
     {
-        windSlider.value = Mathf.Abs( wind.WindSpeed);
+        windSlider.value = Mathf.Abs( windZone.WindSpeed);
     }
 
     public void UpdateScore(int score)
