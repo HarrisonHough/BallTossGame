@@ -8,10 +8,10 @@ using Random = UnityEngine.Random;
 * AUTHOR: Harrison Hough   
 * COPYRIGHT: Harrison Hough 2021
 * VERSION: 1.0
-* SCRIPT: Wind Class 
+* SCRIPT: WindZone Class 
 */
 
-public class Wind : MonoBehaviour 
+public class WindZone : MonoBehaviour 
 {
     [SerializeField]
     private float minSpeed = 0f;
