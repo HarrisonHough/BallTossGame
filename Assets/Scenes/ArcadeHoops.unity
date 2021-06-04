@@ -1383,8 +1383,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1618219253}
-  - component: {fileID: 1618219254}
-  - component: {fileID: 1618219252}
   - component: {fileID: 1618219251}
   m_Layer: 0
   m_Name: InputController
@@ -1405,18 +1403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da18a0e06fa3dab4083acdcc1dca92e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1618219252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618219250}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 655cdcbaa23474f4d8b50d9f7feb03d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1618219253
 Transform:
   m_ObjectHideFlags: 0
@@ -1431,18 +1417,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1618219254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618219250}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b758b26387f471489326c7f44ff04bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!850595691 &1628425308
 LightingSettings:
   m_ObjectHideFlags: 0
