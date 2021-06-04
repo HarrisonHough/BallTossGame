@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
 
 /*
@@ -18,16 +19,17 @@ public class Ball : MonoBehaviour {
     private float yForceScale = 1f;
     [SerializeField]
     private float zForceScale = 1f;
+    [SerializeField]
+    private float power = 50f;
 
-    public float power = 50f;
     private Rigidbody rigidbodyComponent;
+    public Rigidbody RigidbodyComponent => rigidbodyComponent;
     private ConstantForce constantForce;
     private const string GoalTag = "Goal";
     
-	void Start () {
-
+	void Start () 
+    {
         rigidbodyComponent = GetComponent<Rigidbody>();
-        constantForce = GetComponent<ConstantForce>();
     }
 
     public void Shoot()
@@ -35,7 +37,6 @@ public class Ball : MonoBehaviour {
         rigidbodyComponent.useGravity = true;
         Vector3 direction = new Vector3(0,1*yForceScale,1 * zForceScale);
         rigidbodyComponent.AddForce(direction);
-
     }
 
     public void Shoot(Vector3 force)
@@ -43,9 +44,7 @@ public class Ball : MonoBehaviour {
         rigidbodyComponent.useGravity = true;
         Vector3 result = CalculateForce(force);
         rigidbodyComponent.AddForce(result);
-        //Wind.windActive = true;
-        constantForce.enabled = true;
-        //TODO refactor
+        WindZone.windActive = true;
         GetComponent<BallRecycle>().StartRecycle();
     }
 
@@ -59,16 +58,15 @@ public class Ball : MonoBehaviour {
 
     public void DisableGravity()
     {
-        //Wind.windActive = false;
+        WindZone.windActive = false;
         rigidbodyComponent.useGravity = false;
         rigidbodyComponent.velocity = Vector3.zero;
-        constantForce.enabled = false;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Wind.windActive = false;
-        constantForce.enabled = false;
+        //WindZone.windActive = false;
+        //constantForce.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
