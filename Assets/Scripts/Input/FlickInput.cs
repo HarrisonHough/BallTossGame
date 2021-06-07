@@ -7,7 +7,8 @@ public class FlickInput : TouchInput
     private bool ballIsGrabbed = false;
     public static Ball activeBall;
     private const int MouseButtonIndex = 0;
-    // Update is called once per frame
+    private Vector3 lastFramePosition;
+    
     protected override void Update()
     {
 #if UNITY_EDITOR || UNITY_STANDALONE
@@ -67,7 +68,6 @@ public class FlickInput : TouchInput
     protected override void TouchRelease(Vector3 touchPosition, Vector3 deltaPosition)
     {
         ballIsGrabbed = false;
-        var deltaPosition = CalculateDelta();
         var dragVector = CalculateDragVector();
         dragVector.x = dragVector.x.Remap(0, Screen.width, 0,1);
         dragVector.y = dragVector.y.Remap(0, Screen.height, 0, 1);
