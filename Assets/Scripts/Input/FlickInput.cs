@@ -6,6 +6,7 @@ public class FlickInput : TouchInput
 {
     private bool ballIsGrabbed = false;
     public static Ball activeBall;
+    private const int MouseButtonIndex = 0;
     // Update is called once per frame
     protected override void Update()
     {
@@ -18,19 +19,24 @@ public class FlickInput : TouchInput
     
     private void HandleMouseInput()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(MouseButtonIndex))
         {
+            touchStartTime = Time.time;
             TouchStart(Input.mousePosition);
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(MouseButtonIndex))
         {
-            TouchRelease(Input.mousePosition);
+            lastTouchDuration = Time.time - touchStartTime;
+            var delta = Input.mousePosition - lastFramePosition;
+            Debug.Log($"Delta = {delta}");
+            TouchRelease(Input.mousePosition,  delta);
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(MouseButtonIndex))
         {
             TouchHold(Input.mousePosition);
         }
+        lastFramePosition = Input.mousePosition;
     }
     
     protected override void HandleTouches()
@@ -62,9 +68,9 @@ public class FlickInput : TouchInput
     {
         ballIsGrabbed = false;
         var deltaPosition = CalculateDelta();
-        deltaPosition.x = deltaPosition.x.Remap(0, Screen.width, 0,1);
-        deltaPosition.y = deltaPosition.y.Remap(0, Screen.height, 0, 1);
-        deltaPosition.y +=  touchDuration;
+        var dragVector = CalculateDragVector();
+        dragVector.x = dragVector.x.Remap(0, Screen.width, 0,1);
+        dragVector.y = dragVector.y.Remap(0, Screen.height, 0, 1);
         if (activeBall != null)
         {
             activeBall.Shoot(deltaPosition);
