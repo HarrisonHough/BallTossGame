@@ -87,6 +87,7 @@ public class Ball : MonoBehaviour {
 
     private Vector3 CalculateForce(Vector3 force)
     {
+        Debug.Log($"force vector {force}");
         return new Vector3(
             force.x * xForceScale * power,
             force.y * yForceScale * 0.75f * power,

@@ -33,7 +33,6 @@ public class TouchInput : MonoBehaviour
         TouchHold(touch.position);
         if (touch.phase == TouchPhase.Began)
         {
-            touchStartTime = Time.time;
             TouchStart(touch.position);
         }
         else if (touch.phase == TouchPhase.Ended)
@@ -45,8 +44,8 @@ public class TouchInput : MonoBehaviour
 
     protected virtual void TouchStart(Vector3 touchPosition)
     {
+        touchStartTime = Time.time;
         startPoint = touchPosition;
-        lastTouchDuration = 0f;
     }
 
     protected virtual void TouchRelease(Vector3 touchPosition, Vector3 deltaPosition)

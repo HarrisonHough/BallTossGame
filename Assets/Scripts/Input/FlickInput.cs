@@ -22,7 +22,7 @@ public class FlickInput : TouchInput
     {
         if (Input.GetMouseButtonDown(MouseButtonIndex))
         {
-            touchStartTime = Time.time;
+            
             TouchStart(Input.mousePosition);
         }
         else if (Input.GetMouseButtonUp(MouseButtonIndex))
@@ -67,13 +67,24 @@ public class FlickInput : TouchInput
 
     protected override void TouchRelease(Vector3 touchPosition, Vector3 deltaPosition)
     {
+        base.TouchRelease(touchPosition, deltaPosition);
+        var distanceY = (endPoint.y- startPoint.y) / Screen.height;
+        
+        var speedY = distanceY / lastTouchDuration;
+        var distanceX = (endPoint.x - startPoint.x) / Screen.width ;
+
+        var speedX = distanceX / lastTouchDuration;
+        Debug.Log($"speedY = {speedY} distanceY = {distanceY}");
+        Debug.Log($"lastTouchDuration = {lastTouchDuration}");
+        Debug.Log($"speedX = {speedY} distanceX = {distanceX}");
         ballIsGrabbed = false;
         var dragVector = CalculateDragVector();
-        dragVector.x = dragVector.x.Remap(0, Screen.width, 0,1);
-        dragVector.y = dragVector.y.Remap(0, Screen.height, 0, 1);
+        dragVector.x = dragVector.x.Remap(0, Screen.width, 0,1) * (1 +speedX);
+        dragVector.y = dragVector.y.Remap(0, Screen.height, 0, 1) * (1 +speedY);
+        //dragVector.y += speedY;
         if (activeBall != null)
         {
-            activeBall.Shoot(deltaPosition);
+            activeBall.Shoot(dragVector);
         }
     }
 }
