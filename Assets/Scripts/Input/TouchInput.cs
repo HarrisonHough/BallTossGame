@@ -7,7 +7,9 @@ public class TouchInput : MonoBehaviour
 {
     protected Vector3 startPoint;
     protected Vector3 endPoint;
-    protected float touchDuration = 0f;
+    protected float touchStartTime = 0f;
+    protected float lastTouchDuration = 0f;
+    protected Vector3 touchDeltaPosition;
 
     public static Action<float, Vector3> OnTouchRelease;
     public static Action<Vector3> OnTouchStart;
@@ -28,38 +30,40 @@ public class TouchInput : MonoBehaviour
 
     protected virtual void HandleTouch(Touch touch)
     {
-        TouchHold();
+        TouchHold(touch.position);
         if (touch.phase == TouchPhase.Began)
         {
+            touchStartTime = Time.time;
             TouchStart(touch.position);
         }
         else if (touch.phase == TouchPhase.Ended)
         {
             endPoint = touch.position;
-            TouchRelease(touch.position);
+            TouchRelease(touch.position, touch.deltaPosition);
         }
     }
 
     protected virtual void TouchStart(Vector3 touchPosition)
     {
         startPoint = touchPosition;
-        touchDuration = 0f;
+        lastTouchDuration = 0f;
     }
 
-    protected virtual void TouchRelease(Vector3 touchPosition)
+    protected virtual void TouchRelease(Vector3 touchPosition, Vector3 deltaPosition)
     {
         endPoint = touchPosition;
+        touchDeltaPosition = deltaPosition;
+        lastTouchDuration = Time.time - touchStartTime;
     }
 
-    protected virtual void TouchHold()
+    protected virtual void TouchHold(Vector3 touchPosition)
     {
-        touchDuration += Time.deltaTime;
     }
 
-    protected Vector3 CalculateDelta()
+    protected Vector3 CalculateDragVector()
     {
         endPoint = Input.mousePosition;
-        Vector3 deltaPos = endPoint - startPoint;
-        return deltaPos;
+        Vector3 dragVector = endPoint - startPoint;
+        return dragVector;
     }
 }

@@ -29,7 +29,7 @@ public class FlickInput : TouchInput
 
         if (Input.GetMouseButton(0))
         {
-            TouchHold();
+            TouchHold(Input.mousePosition);
         }
     }
     
@@ -58,7 +58,7 @@ public class FlickInput : TouchInput
         }
     }
 
-    protected override void TouchRelease(Vector3 touchPosition)
+    protected override void TouchRelease(Vector3 touchPosition, Vector3 deltaPosition)
     {
         ballIsGrabbed = false;
         var deltaPosition = CalculateDelta();
