@@ -8,7 +8,7 @@ public class FlickInput : TouchInput
     public static Ball activeBall;
     private const int MouseButtonIndex = 0;
     private Vector3 lastFramePosition;
-    
+
     protected override void Update()
     {
 #if UNITY_EDITOR || UNITY_STANDALONE
@@ -71,20 +71,26 @@ public class FlickInput : TouchInput
         var distanceY = (endPoint.y- startPoint.y) / Screen.height;
         
         var speedY = distanceY / lastTouchDuration;
+        
         var distanceX = (endPoint.x - startPoint.x) / Screen.width ;
 
-        var speedX = distanceX / lastTouchDuration;
+        var speedX = Mathf.Abs(distanceX / lastTouchDuration);
+        
         Debug.Log($"speedY = {speedY} distanceY = {distanceY}");
         Debug.Log($"lastTouchDuration = {lastTouchDuration}");
         Debug.Log($"speedX = {speedY} distanceX = {distanceX}");
         ballIsGrabbed = false;
         var dragVector = CalculateDragVector();
-        dragVector.x = dragVector.x.Remap(0, Screen.width, 0,1) * (1 +speedX);
-        dragVector.y = dragVector.y.Remap(0, Screen.height, 0, 1) * (1 +speedY);
+        dragVector.x = dragVector.x.Remap(0, Screen.width, 0,1) * (1 + speedX);
+        dragVector.y = dragVector.y.Remap(0, Screen.height, 0, 1) * (1 + speedY);
         //dragVector.y += speedY;
-        if (activeBall != null)
+        if (activeBall != null && Vector3.Distance(startPoint, endPoint) > minimumSwipeDistance)
         {
             activeBall.Shoot(dragVector);
+        }
+        else
+        {
+            Debug.Log("Swip was less than minimum swipe distance");
         }
     }
 }

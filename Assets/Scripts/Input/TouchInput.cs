@@ -10,9 +10,11 @@ public class TouchInput : MonoBehaviour
     protected float touchStartTime = 0f;
     protected float lastTouchDuration = 0f;
     protected Vector3 touchDeltaPosition;
-
+    protected float minimumSwipeDistance = 20;
     public static Action<float, Vector3> OnTouchRelease;
     public static Action<Vector3> OnTouchStart;
+
+    
     
     protected virtual void Update()
     {
