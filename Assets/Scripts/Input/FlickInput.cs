@@ -22,7 +22,6 @@ public class FlickInput : TouchInput
     {
         if (Input.GetMouseButtonDown(MouseButtonIndex))
         {
-            
             TouchStart(Input.mousePosition);
         }
         else if (Input.GetMouseButtonUp(MouseButtonIndex))
