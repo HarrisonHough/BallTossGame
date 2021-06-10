@@ -10,51 +10,51 @@
 public class GenericSingleton<T> : MonoBehaviour where T : Component
 {
         
-    private static T _instance;
+    private static T instance;
     [SerializeField]
-    public bool _destroyOnLoad = false;
-
-    //publicly accessible reference to the instance
+    private bool destroyOnLoad;
+    
     public static T Instance
     {
         get
         {
-            //check if an instance already exists
-            if (_instance == null)
+            if (instance == null)
             {
-                //if not create new instance
-                _instance = FindObjectOfType<T>();
-                if (_instance == null)
-                {
-                    GameObject obj = new GameObject();
-                    obj.name = typeof(T).Name;
-                    _instance = obj.AddComponent<T>();
-                }
+                FindOrCreateInstance();
             }
-            //if instance exists return instance
-            return _instance;
+            return instance;
         }
     }
 
-    /// <summary>
-    /// Called on awake, before the start function
-    /// </summary>
+    private static void FindOrCreateInstance()
+    {
+        instance = FindObjectOfType<T>();
+        if (instance == null)
+        {
+            GameObject obj = new GameObject();
+            obj.name = typeof(T).Name;
+            instance = obj.AddComponent<T>();
+        }
+    }
+
     public virtual void Awake()
     {
-        if (_instance == null)
+        if (instance == null)
         {
-            _instance = this as T;
-            if (!_destroyOnLoad)
-            {
-                Debug.Log(gameObject.name + "Generic Singleton will NOT destroy on load");
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-                Debug.Log(gameObject.name + "Generic Singleton will destroy on load");
+            SetInstance();
         }
-        else if(_instance != this)
+        else if(instance != this)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void SetInstance()
+    {
+        instance = this as T;
+        if (!destroyOnLoad)
+        {
+            DontDestroyOnLoad(gameObject);
         }
     }
 }

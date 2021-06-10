@@ -9,24 +9,14 @@ using UnityEngine;
 * SCRIPT: Game Manager Class 
 */
 
-public class GameManager : MonoBehaviour {
-
-    private static GameManager instance;
-    public static GameManager Instance { get { return instance; } }
+public class GameManager : GenericSingleton<GameManager> {
+    
     private UIControl uiControl;
     private int score = 0;
     
-	void Awake () {
-
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-	}
+	public override void Awake () {
+        base.Awake();
+    }
 
     private void Start()
     {
