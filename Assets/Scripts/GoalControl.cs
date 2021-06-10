@@ -9,14 +9,21 @@ using UnityEngine;
 * SCRIPT: Goal Control Class 
 */
 
-public class GoalControl : MonoBehaviour {
+public class GoalControl : MonoBehaviour 
+{
 
     [SerializeField]
     private GameObject[] positions;
 
     private int positionIndex;
+    private GoalTrigger goalTrigger;
     
 	void Start () {
+        if (positions.Length < 1)
+        {
+            enabled = false;
+            return;
+        }
 
         CheckPositions();
         SetInitialPosition();

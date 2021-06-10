@@ -11,37 +11,46 @@ using UnityEngine.UI;
 * SCRIPT: UI Control Class 
 */
 
-public class UIControl : MonoBehaviour {
-
-    [FormerlySerializedAs("wind")] [SerializeField]
-    private WindZone windZone;
+public class UIControl : MonoBehaviour 
+{
     [SerializeField]
     private Slider windSlider;
     [SerializeField]
     private Text scoreText;
+    [SerializeField]
+    private Text windText;
+    [SerializeField]
+    private Image windArrow;
 
     private const string ScorePrefix = "Score\n";
-    void Start () {
-        if (windZone != null)
-        {
-            windZone.WindSpeed = 0f;
-        }
+    void Start () 
+    {
+        Wind.RandomWindStrength(true);
+        UpdateWindPanel();
         GameManager.OnScoreUpdated += UpdateScore;
     }
 
 
     public void SetWind(float value)
     {
-        windZone.WindSpeed = value;
+        Wind.WindSpeed = value;
     }
 
     public void UpdateWindSlider()
     {
-        windSlider.value = Mathf.Abs( windZone.WindSpeed);
+        windSlider.value = Mathf.Abs( Wind.WindSpeed);
+    }
+
+    private void UpdateWindPanel()
+    {
+        windArrow.transform.rotation = Wind.WindSpeed < 0 ? Quaternion.Euler(0,180,0) : Quaternion.Euler(0,0,0);
+        windText.text = Wind.GetReadableWindSpeed();
     }
 
     public void UpdateScore(int score)
     {
         scoreText.text = ScorePrefix + score; 
+        Wind.RandomWindStrength(true);
+        UpdateWindPanel();
     }
 }

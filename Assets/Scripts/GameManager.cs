@@ -8,7 +8,8 @@ using UnityEngine.Events;
 * SCRIPT: Game Manager Class 
 */
 
-public class GameManager : GenericSingleton<GameManager> {
+public class GameManager : GenericSingleton<GameManager> 
+{
     
     private UIControl uiControl;
     private int score = 0;

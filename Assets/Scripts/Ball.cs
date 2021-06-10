@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /*
 * AUTHOR: Harrison Hough   
@@ -8,7 +9,8 @@
 */
 
 [RequireComponent(typeof(Rigidbody))]
-public class Ball : MonoBehaviour {
+public class Ball : MonoBehaviour 
+{
 
     [SerializeField]
     private float xForceScale = 1f;
@@ -39,6 +41,14 @@ public class Ball : MonoBehaviour {
         rigidbodyComponent.AddForce(direction);
     }
 
+    private void FixedUpdate()
+    {
+        if (Wind.windActive && rigidbodyComponent.useGravity)
+        {
+            AddForce(Wind.windForce);
+        }
+    }
+
     public void Shoot(Vector3 force)
     {
         if (force.sqrMagnitude < 1)
@@ -47,14 +57,18 @@ public class Ball : MonoBehaviour {
         }
         hasScored = false;
         rigidbodyComponent.useGravity = true;
-        Vector3 result = CalculateForce(force);
-        rigidbodyComponent.AddForce(result);
-        WindZone.windActive = true;
+        AddForce(CalculateForce(force));
+        Wind.windActive = true;
         var ballRecycle = GetComponent<BallRecycle>();
         if (ballRecycle)
         {
             ballRecycle.StartRecycle();
         }
+    }
+
+    public void AddForce(Vector3 force)
+    {
+        rigidbodyComponent.AddForce(force);
     }
 
     private Vector3 CalculateForce(Vector3 force)
@@ -68,7 +82,7 @@ public class Ball : MonoBehaviour {
 
     public void DisableGravity()
     {
-        WindZone.windActive = false;
+        Wind.windActive = false;
         rigidbodyComponent.useGravity = false;
         rigidbodyComponent.velocity = Vector3.zero;
     }
