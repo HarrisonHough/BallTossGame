@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using UnityEngine.Events;
 
 /*
 * AUTHOR: Harrison Hough   
@@ -13,21 +12,20 @@ public class GameManager : GenericSingleton<GameManager> {
     
     private UIControl uiControl;
     private int score = 0;
+    public static UnityAction<int> OnScoreUpdated;
     
 	public override void Awake () {
         base.Awake();
     }
 
-    private void Start()
+    public void UpdateScore(int value)
     {
-        //TODO refactor
-        uiControl = FindObjectOfType<UIControl>();
+        score += value;
+        OnScoreUpdated?.Invoke(score);
     }
 
-    public void UpdateScore()
+    private void OnDestroy()
     {
-        score++;
-        uiControl.UpdateScore(score);
-
+        OnScoreUpdated = null;
     }
 }

@@ -19,6 +19,8 @@ public class Ball : MonoBehaviour {
     [SerializeField]
     private float power = 20f;
 
+    [SerializeField] private int pointValue = 1;
+
     private Rigidbody rigidbodyComponent;
     public Rigidbody RigidbodyComponent => rigidbodyComponent;
     private ConstantForce constantForce;
@@ -48,23 +50,19 @@ public class Ball : MonoBehaviour {
         Vector3 result = CalculateForce(force);
         rigidbodyComponent.AddForce(result);
         WindZone.windActive = true;
-        GetComponent<BallRecycle>().StartRecycle();
+        var ballRecycle = GetComponent<BallRecycle>();
+        if (ballRecycle)
+        {
+            ballRecycle.StartRecycle();
+        }
     }
-
 
     private Vector3 CalculateForce(Vector3 force)
     {
-        var maxY = 5;
-        //force.y = Mathf.Clamp(force.y, 0, maxY);
-        var maxX = 1.5f;
-        //force.x = Mathf.Clamp(force.x, 0, maxX);
-        Debug.Log($"force vector {force}");
         var finalForce = new Vector3(
             force.x * xForceScale * power,
             force.y * yForceScale * power,
             force.y * zForceScale * power);
-        Debug.Log($"finalForce vector {finalForce}");
-
         return finalForce;
     }
 
@@ -86,7 +84,7 @@ public class Ball : MonoBehaviour {
         if (other.tag.Contains(GoalTag) && !hasScored)
         {
             hasScored = true;
-            GameManager.Instance.UpdateScore();
+            GameManager.Instance.UpdateScore(pointValue);
         }
     }
 

@@ -26,6 +26,7 @@ public class UIControl : MonoBehaviour {
         {
             windZone.WindSpeed = 0f;
         }
+        GameManager.OnScoreUpdated += UpdateScore;
     }
 
 
@@ -43,6 +44,4 @@ public class UIControl : MonoBehaviour {
     {
         scoreText.text = ScorePrefix + score; 
     }
-
-
 }
