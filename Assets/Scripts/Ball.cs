@@ -29,8 +29,13 @@ public class Ball : MonoBehaviour
     private const string GoalTag = "Goal";
     private bool hasScored = false;
     
-	void Start () 
+    Vector3 startPosition;
+    Quaternion startRotation;
+    
+	void Awake () 
     {
+        startPosition = transform.position;
+        startRotation = transform.rotation;
         rigidbodyComponent = GetComponent<Rigidbody>();
     }
 
@@ -102,4 +107,11 @@ public class Ball : MonoBehaviour
         }
     }
 
+    public void ResetPosition()
+    {
+        DisableGravity();
+        rigidbodyComponent.angularVelocity = Vector3.zero;
+        transform.position = startPosition;
+        transform.rotation = startRotation;
+    }
 }

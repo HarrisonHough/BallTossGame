@@ -8,19 +8,14 @@ using UnityEngine;
 * SCRIPT: Ball Recycle Class 
 */
 
-public class BallRecycle : MonoBehaviour {
-
-    Vector3 startPosition;
-    Quaternion startRotation;
+public class BallRecycle : MonoBehaviour 
+{
     public float recycleTime = 3f;
-    Rigidbody rigidbody;
-    Ball ball;
-	// Use this for initialization
-	void Start () {
+    private Ball ball;
+    
+    
+	private void Awake () {
         ball = GetComponent<Ball>();
-        startPosition = transform.position;
-        startRotation = transform.rotation;
-        rigidbody = GetComponent<Rigidbody>();
 	}
 
     public void StartRecycle()
@@ -30,17 +25,12 @@ public class BallRecycle : MonoBehaviour {
 
     IEnumerator RecycleTimer()
     {
-
         yield return new WaitForSeconds(recycleTime);
         Recycle();
-
     }
 
-    void Recycle()
+    private void Recycle()
     {
-        ball.DisableGravity();
-        rigidbody.angularVelocity = Vector3.zero;
-        transform.position = startPosition;
-        transform.rotation = startRotation;
+        ball.ResetPosition();
     }
 }

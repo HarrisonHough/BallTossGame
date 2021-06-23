@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 /*
@@ -15,7 +14,6 @@ public static class Wind
     private static readonly float maxSpeed = 2f;
     
     private static readonly Vector3 windDirection = Vector3.right;
-    [SerializeField]
     private static float windSpeed = 0;
 
     public static Vector3 windForce;
