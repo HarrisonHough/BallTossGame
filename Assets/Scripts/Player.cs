@@ -9,8 +9,10 @@ using UnityEngine;
 * SCRIPT: Player Class 
 */
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
+	private int score;
 	// Use this for initialization
 	void Start () {
 		

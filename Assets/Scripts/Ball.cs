@@ -24,7 +24,6 @@ public class Ball : MonoBehaviour
     [SerializeField] private int pointValue = 1;
 
     private Rigidbody rigidbodyComponent;
-    public Rigidbody RigidbodyComponent => rigidbodyComponent;
     private ConstantForce constantForce;
     private const string GoalTag = "Goal";
     private bool hasScored = false;
