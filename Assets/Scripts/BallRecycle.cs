@@ -14,7 +14,8 @@ public class BallRecycle : MonoBehaviour
     private Ball ball;
     
     
-	private void Awake () {
+	private void Awake () 
+    {
         ball = GetComponent<Ball>();
 	}
 

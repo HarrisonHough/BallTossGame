@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 {
 
 	private int score;
+	
 	// Use this for initialization
 	void Start () {
 		
